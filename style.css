@@ -14,18 +14,24 @@ body {
 
 /* === Page Container === */
 .page {
-  width: 95vw;                      /* Almost full screen width */
-  height: 90vh;                     /* Fit within visible background */
-  margin: auto;
+  width: 95vw;
+  min-height: 90vh;               /* allow it to grow past 90vh if needed */
+  margin: 40px auto;              /* give space above & below each page */
   padding: 30px;
-  border: 2px dotted white;         /* White dotted border like chalk lines */
+  border: 2px dotted white;
   box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0.6); /* Transparent black for chalkboard effect */
+  background-color: rgba(0,0,0,0.6);
   page-break-after: always;
-  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  gap: 20px;                      /* automatically space out children */
+  overflow: auto;                 /* scroll internally if really huge */
+}
+
+.bingo,
+.keyword-table,
+.cut-grid {
+  margin-bottom: 20px;
 }
 
 /* === Headings === */
