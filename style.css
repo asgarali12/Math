@@ -1,13 +1,16 @@
-/* Import Eraser Font */
+/* Import Eraser font */
 @import url('https://fonts.cdnfonts.com/css/eraser');
 
-/* === Global Styling === */
+/* === Global Styles === */
 body {
   margin: 0;
   padding: 0;
-  background: url('https://spaces-cdn.clipsafari.com/n9uhzkzo2wpf4ze48mkfh2uf8rve') no-repeat center center fixed;
-  background-size: contain; /* Show full blackboard image */
-  background-color: black;
+  /* base chalkboard background */
+  background-image: url("chalk board background.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: black; /* fallback */
   font-family: 'Eraser', cursive;
   color: white;
 }
@@ -15,30 +18,31 @@ body {
 /* === Page Container === */
 .page {
   width: 95vw;
-  min-height: 90vh;               /* allow it to grow past 90vh if needed */
-  margin: 40px auto;              /* give space above & below each page */
+  min-height: 90vh;
+  margin: 40px auto;               /* space above & below each “page” */
   padding: 30px;
-  border: 2px dotted white;
   box-sizing: border-box;
-  background-color: rgba(0,0,0,0.6);
   page-break-after: always;
   display: flex;
   flex-direction: column;
-  gap: 20px;                      /* automatically space out children */
-  overflow: auto;                 /* scroll internally if really huge */
-}
+  gap: 20px;                       /* automatically space out children */
+  overflow: auto;
 
-.bingo,
-.keyword-table,
-.cut-grid {
-  margin-bottom: 20px;
+  /* top layer = wooden frame; transparent center lets chalkboard show */
+  background-image: url("chalk board border background.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  /* semi-opaque inner fill for chalk effect behind your content */
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 /* === Headings === */
 h1 {
   text-align: center;
   font-size: 32px;
-  color: #ffd700; /* Chalk-gold style heading */
+  color: #ffd700; /* chalk-gold style */
   margin-bottom: 15px;
 }
 
@@ -46,7 +50,7 @@ h1 {
 .keyword-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .keyword-table th,
@@ -55,8 +59,8 @@ h1 {
   padding: 8px;
   text-align: center;
   font-size: 14px;
-  color: white;
   background-color: transparent;
+  color: white;
 }
 
 .keyword-table th {
@@ -68,7 +72,7 @@ h1 {
 .bingo {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
+  margin-bottom: 20px;
 }
 
 .bingo td {
@@ -81,11 +85,11 @@ h1 {
   color: white;
 }
 
-/* === Cut Grid === */
+/* === Cut & Paste Grid === */
 .cut-grid {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .cut-grid td {
@@ -98,16 +102,17 @@ h1 {
   color: white;
 }
 
-/* === Treasure Hunt Section === */
+/* === Treasure Hunt List === */
 ol.treasure-hunt {
   padding-left: 25px;
   font-size: 16px;
 }
 
 ol.treasure-hunt li {
-  margin-bottom: 10mm;
+  margin-bottom: 8mm;
 }
 
+/* === Emphasis === */
 strong {
   color: #ffcccb;
 }
@@ -116,4 +121,5 @@ strong {
 p {
   text-align: center;
   font-size: 14px;
+  margin-bottom: 20px;
 }
