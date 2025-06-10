@@ -1,125 +1,204 @@
 /* Import Eraser font */
 @import url('https://fonts.cdnfonts.com/css/eraser');
 
-/* === Global Styles === */
-body {
-  margin: 0;
-  padding: 0;
-  /* base chalkboard background */
-  background-image: url("chalk board background.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: black; /* fallback */
+/* === Base & Scroll-Snap === */
+html, body {
+  margin: 0; padding: 0;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
   font-family: 'Eraser', cursive;
   color: white;
+  background: url("chalk board background.png") center/cover no-repeat fixed black;
+}
+
+/* === Full-Viewport Wooden Frame Overlay === */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("chalk board border background.png") center/100% 100% no-repeat fixed;
+  pointer-events: none;
+  z-index: 999;
 }
 
 /* === Page Container === */
 .page {
-  width: 95vw;
-  min-height: 90vh;
-  margin: 40px auto;               /* space above & below each “page” */
-  padding: 30px;
+  scroll-snap-align: start;
+  width: 100vw;
+  height: 100vh;
   box-sizing: border-box;
-  page-break-after: always;
+  padding: 100px 20px 20px; /* top/right/bottom */
+  background: rgba(0,0,0,0.6);
+  position: relative;
+  z-index: 1;
+  overflow: visible;
   display: flex;
   flex-direction: column;
-  gap: 20px;                       /* automatically space out children */
-  overflow: auto;
-
-  /* top layer = wooden frame; transparent center lets chalkboard show */
-  background-image: url("chalk board border background.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: contain;
-
-  /* semi-opaque inner fill for chalk effect behind your content */
-  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
 }
 
 /* === Headings === */
 h1 {
-  text-align: center;
+  margin: 0 0 10px;
   font-size: 32px;
-  color: #ffd700; /* chalk-gold style */
-  margin-bottom: 15px;
+  color: #ffd700;
+  text-align: center;
 }
 
-/* === Keyword Table === */
+/* === Cheat-Sheet Table === */
 .keyword-table {
-  width: 100%;
+  border: 1px solid white;
   border-collapse: collapse;
+  width: 90%;
+  max-width: 350px;
   margin-bottom: 20px;
 }
-
-.keyword-table th,
-.keyword-table td {
-  border: 1px solid white;
-  padding: 8px;
-  text-align: center;
-  font-size: 14px;
-  background-color: transparent;
-  color: white;
-}
-
 .keyword-table th {
-  background-color: rgba(255, 255, 255, 0.1);
-  font-weight: bold;
-}
-
-/* === Bingo Grid === */
-.bingo {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.bingo td {
-  width: 20%;
-  height: 80px;
+  width: 120px;
+  height: 50px;
+  box-sizing: border-box;
+  padding: 6px;
   text-align: center;
-  font-size: 16px;
+  background: rgba(255,255,255,0.1);
+  color: white;
   border: 1px solid white;
-  background-color: rgba(255, 255, 255, 0.1);
+}
+.keyword-table td {
+  width: 120px;
+  height: 80px;
+  box-sizing: border-box;
+  padding: 6px;
+  text-align: center;
+  background: rgba(255,255,255,0.1);
   color: white;
+  border: 1px solid white;
 }
 
-/* === Cut & Paste Grid === */
-.cut-grid {
-  width: 100%;
+/* === Page 3: Math Formulas === */
+.formulas {
+  list-style: decimal;
+  text-align: left;
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  font-size: 24px;
+}
+
+.formulas li {
+  margin-bottom: 0.5em;
+}
+
+
+/* === Bingo Card (155×130 cells) === */
+.bingo-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.bingo {
   border-collapse: collapse;
+  table-layout: fixed;
+}
+.bingo td {
+  width: 155px;
+  height: 130px;
+  border: 1px solid white;
+  text-align: center;
+  font-size: 16px;
+  background: rgba(255,255,255,0.1);
+  cursor: pointer;
+}
+.bingo td.selected {
+  background: #ffcccb;
+  color: black;
+}
+
+/* === Treasure Hunt === */
+ol.treasure-hunt {
+  /* increased left indent to 2 inches */
+  padding-left: 2in;
+  padding-right: 50px;
+  width: 100%;
   margin-bottom: 20px;
 }
-
-.cut-grid td {
-  width: 25%;
-  height: 40px;
-  font-size: 14px;
-  border: 1px dashed white;
-  background-color: rgba(255, 255, 255, 0.1);
-  text-align: center;
-  color: white;
-}
-
-/* === Treasure Hunt List === */
-ol.treasure-hunt {
-  padding-left: 25px;
-  font-size: 16px;
-}
-
 ol.treasure-hunt li {
-  margin-bottom: 8mm;
+  margin-bottom: 6mm;
 }
-
-/* === Emphasis === */
-strong {
+.answer-input {
+  width: 50px;
+  margin-right: 6px;
+}
+.submit-btn {
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.feedback {
+  margin-left: 8px;
+  font-weight: bold;
   color: #ffcccb;
 }
 
-/* === Paragraphs === */
-p {
+/* === Drag & Drop Game === */
+.drag-container {
+  padding-left: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.item {
+  padding: 4px 8px;
+  border: 1px solid white;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  cursor: move;
+}
+.drop-zones {
+  padding-left: 20px;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+.dropzone {
+  flex: 1;
+  min-height: 80px;
+  border: 2px dashed white;
+  background: rgba(255,255,255,0.1);
+  padding: 6px;
+}
+.dropzone.over {
+  background: rgba(255,255,255,0.2);
+}
+.dropzone h3 {
+  margin: 0 0 6px;
   text-align: center;
-  font-size: 14px;
-  margin-bottom: 20px;
+  color: #ffd700;
+}
+#drag-feedback {
+  margin-left: 20px;
+}
+
+/* Draggable items styled as buttons & non-selectable */
+.item {
+  display: inline-block;
+  margin: 4px;
+  padding: 8px 12px;
+  background-color: rgba(50, 50, 50, 0.8);
+  color: white;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  cursor: grab;
+  user-select: none;        /* disable text highlighting */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.item:active {
+  cursor: grabbing;
+  background-color: rgba(70, 70, 70, 0.8);
 }
