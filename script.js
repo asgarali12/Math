@@ -176,9 +176,56 @@ function setupDrag() {
       }
       it.draggable = false;
     });
-    document.getElementById("drag-feedback").textContent =
+  document.getElementById("drag-feedback").textContent =
       `${correct} correct, ${wrong} wrong`;
   });
+}
+
+// === Page 6: SEA Practice Questions ===
+function generatePracticeQuestion() {
+  const ops = ["+", "-", "×", "÷"];
+  const op = ops[randInt(3)];
+  let a, b, q, ans;
+  switch (op) {
+    case "+":
+      a = randInt(999); b = randInt(999);
+      q = `${a} + ${b}`; ans = a + b; break;
+    case "-":
+      a = randInt(999); b = randInt(a);
+      q = `${a} - ${b}`; ans = a - b; break;
+    case "×":
+      a = randInt(99); b = randInt(99);
+      q = `${a} × ${b}`; ans = a * b; break;
+    default: // division
+      b = randInt(12) + 1;
+      a = b * randInt(12);
+      q = `${a} ÷ ${b}`; ans = a / b; break;
+  }
+  return { q, ans };
+}
+
+function setupPractice() {
+  const qEl = document.getElementById("practice-question");
+  if (!qEl) return;
+  const ansEl = document.getElementById("practice-answer");
+  const fbEl = document.getElementById("practice-feedback");
+  let currentAns = 0;
+
+  function newQ() {
+    const { q, ans } = generatePracticeQuestion();
+    currentAns = ans;
+    qEl.textContent = q;
+    ansEl.value = "";
+    fbEl.textContent = "";
+  }
+
+  document.getElementById("practice-submit").addEventListener("click", () => {
+    const val = Number(ansEl.value);
+    fbEl.textContent = val === currentAns ? "Correct!" : `Incorrect. Answer: ${currentAns}`;
+  });
+  document.getElementById("practice-new").addEventListener("click", newQ);
+
+  newQ();
 }
 
 // === Initialize All ===
@@ -186,4 +233,5 @@ document.addEventListener("DOMContentLoaded", () => {
   populateBingo("bingo1");
   setupTreasure();
   setupDrag();
+  setupPractice();
 });

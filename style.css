@@ -202,3 +202,18 @@ ol.treasure-hunt li {
   cursor: grabbing;
   background-color: rgba(70, 70, 70, 0.8);
 }
+
+/* === SEA Practice Page === */
+.practice-container {
+  text-align: center;
+}
+
+.practice-question {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.practice-page .answer-input {
+  width: 80px;
+  margin-right: 6px;
+}
